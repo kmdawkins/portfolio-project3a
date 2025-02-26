@@ -1,0 +1,35 @@
+# Ignore Python virtual environment
+venv/
+
+# Ignore all database backup files
+*.sql
+*.dump
+*.bak
+
+# Ignore logs and temporary files
+logs/
+*.log
+*.out
+*.err
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter Notebook checkpoints (if using notebooks/)
+notebooks/.ipynb_checkpoints/
+
+# Ignore environment configuration files (if any)
+.env
+secrets.json
+
+# Ignore data files
+data/raw/
+data/processed/
+data/*.csv
+data/*.json
+
+# Ignore VS Code workspace settings
+.vscode/
