@@ -1,0 +1,9 @@
+# Core Python packages for ETL
+pandas
+psycopg2-binary
+SQLAlchemy
+
+# Logging & error handling
+loguru
+
+# (Optional) Add any other required dependencies here
