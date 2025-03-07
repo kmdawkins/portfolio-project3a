@@ -1,7 +1,9 @@
+# Project 3A: Python ETL Workflow Conversion - .gitignore
+
 # Ignore Python virtual environment
 venv/
 
-# Ignore all database backup files
+# Ignore all database backup files and dumps
 *.sql
 *.dump
 *.bak
@@ -21,15 +23,29 @@ __pycache__/
 # Ignore Jupyter Notebook checkpoints (if using notebooks/)
 notebooks/.ipynb_checkpoints/
 
-# Ignore environment configuration files (if any)
+# Ignore environment configuration files (Sensitive credentials)
 .env
 secrets.json
+etl_pipeline/config/*.yml
+etl_pipeline/config/*.json
 
-# Ignore data files
+# Ignore raw and processed data files
 data/raw/
 data/processed/
+data/staging/
 data/*.csv
 data/*.json
+data/*.parquet
 
 # Ignore VS Code workspace settings
 .vscode/
+
+# Ignore Apache Airflow metadata database (if using SQLite for local testing)
+airflow/airflow.db
+airflow/logs/
+airflow/tmp/
+
+# Ignore temporary files used in testing
+tests/tmp/
+tests/etl_tests/tmp/
+tests/airflow_tests/tmp/
