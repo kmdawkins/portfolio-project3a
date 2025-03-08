@@ -2,6 +2,7 @@
 
 # Ignore Python virtual environment
 venv/
+etl_env/
 
 # Ignore all database backup files and dumps
 *.sql
@@ -23,11 +24,15 @@ __pycache__/
 # Ignore Jupyter Notebook checkpoints (if using notebooks/)
 notebooks/.ipynb_checkpoints/
 
-# Ignore environment configuration files (Sensitive credentials)
+# Ignore environment configuration files (Sensitive credentials - DO NOT COMMIT)
 .env
 secrets.json
 etl_pipeline/config/*.yml
 etl_pipeline/config/*.json
+
+# Ignore compiled Python files in utils (EXCEPT db_connector.py)
+etl_pipeline/utils/*.pyc
+!etl_pipeline/utils/db_connector.py
 
 # Ignore raw and processed data files
 data/raw/
@@ -39,11 +44,6 @@ data/*.parquet
 
 # Ignore VS Code workspace settings
 .vscode/
-
-# Ignore Apache Airflow metadata database (if using SQLite for local testing)
-airflow/airflow.db
-airflow/logs/
-airflow/tmp/
 
 # Ignore temporary files used in testing
 tests/tmp/
