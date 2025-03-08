@@ -20,3 +20,16 @@ def get_sqlalchemy_engine():
     """Returns a SQLAlchemy database engine."""
     DATABASE_URL = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     return create_engine(DATABASE_URL)
+
+if __name__ == "__main__":
+    try:
+        conn = get_psycopg2_conn()
+        print("✅ PostgreSQL psycopg2 connection successful!")
+        conn.close()
+
+        engine = get_sqlalchemy_engine()
+        with engine.connect() as conn:
+            print("✅ PostgreSQL SQLAlchemy connection successful!")
+    except Exception as e:
+        print(f"❌ Database connection failed: {e}")
+
