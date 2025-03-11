@@ -1,40 +1,63 @@
 # Project 3A: Python ETL Workflow Conversion - .gitignore
 
-# Ignore Python virtual environment
+# -------------------------------
+# ✅ Python Virtual Environments
+# -------------------------------
+# Ignore all local virtual environments (including external venvs)
 venv/
+.env/
 etl_env/
+C:/venvs/
 
-# Ignore all database backup files and dumps
+# -------------------------------
+# ✅ Database Backups & Dumps
+# -------------------------------
+# Ignore all database dump/backup files
 *.sql
 *.dump
 *.bak
 
-# Ignore logs and temporary files
+# -------------------------------
+# ✅ Logs and Temporary Files
+# -------------------------------
 logs/
 *.log
 *.out
 *.err
 
-# Ignore Python cache files
+# -------------------------------
+# ✅ Python Cache & Compiled Files
+# -------------------------------
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Ignore Jupyter Notebook checkpoints (if using notebooks/)
+# -------------------------------
+# ✅ Jupyter Notebook Checkpoints
+# -------------------------------
+# (if using notebooks/)
 notebooks/.ipynb_checkpoints/
 
-# Ignore environment configuration files (Sensitive credentials - DO NOT COMMIT)
+# -------------------------------
+# ✅ Sensitive Configurations
+# -------------------------------
+# Ignore environment files containing secrets (DO NOT COMMIT)
 .env
 secrets.json
 etl_pipeline/config/*.yml
 etl_pipeline/config/*.json
 
-# Ignore compiled Python files in utils (EXCEPT db_connector.py)
+# -------------------------------
+# ✅ Utils Compiled Files (Selective)
+# -------------------------------
+# Ignore compiled Python files in utils, but keep db_connector.py
 etl_pipeline/utils/*.pyc
 !etl_pipeline/utils/db_connector.py
 
-# Ignore raw and processed data files
+# -------------------------------
+# ✅ Data Files (Raw, Processed, Staging)
+# -------------------------------
 data/raw/
 data/processed/
 data/staging/
@@ -42,10 +65,14 @@ data/*.csv
 data/*.json
 data/*.parquet
 
-# Ignore VS Code workspace settings
+# -------------------------------
+# ✅ VS Code Settings
+# -------------------------------
 .vscode/
 
-# Ignore temporary files used in testing
+# -------------------------------
+# ✅ Test Temporary Files
+# -------------------------------
 tests/tmp/
 tests/etl_tests/tmp/
 tests/airflow_tests/tmp/

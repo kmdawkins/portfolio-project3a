@@ -1,9 +1,8 @@
 # Core Python packages for ETL
-pandas
-psycopg2-binary
-SQLAlchemy
+pandas==2.2.3
+numpy==2.2.3
+SQLAlchemy==2.0.39
+psycopg2-binary==2.9.10
 
 # Logging & error handling
-loguru
-
-# (Optional) Add any other required dependencies here
+loguru==0.7.3
