@@ -12,10 +12,14 @@ C:/venvs/
 # -------------------------------
 # ✅ Database Backups & Dumps
 # -------------------------------
-# Ignore all database dump/backup files
 *.sql
 *.dump
 *.bak
+
+# --------------------------------
+# ✅ Allow SQL files in sql_queries (ETL pipeline SQL scripts)
+# --------------------------------
+!sql_queries/**/*.sql
 
 # -------------------------------
 # ✅ Logs and Temporary Files
