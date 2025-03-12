@@ -5,10 +5,10 @@
 -- =================================================
 
 -- Drop table if it exists to avoid duplication errors.
-DROP TABLE IF EXISTS staging.pmo;
+DROP TABLE IF EXISTS staging_pmo;
 
 -- Create staging table (without constraints or indexes)
-CREATE TABLE staging.pmo (
+CREATE TABLE staging_pmo (
     payment_no              VARCHAR(20),
     transaction_date        DATE,
     campaign_id             VARCHAR(10),
