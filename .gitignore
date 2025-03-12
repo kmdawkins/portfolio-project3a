@@ -69,6 +69,7 @@ data/*.parquet
 # ✅ Ignore internal workflow references and documentation (DO NOT COMMIT)
 # -------------------------------
 .git_workflow.md
+developer_notes.md
 
 # -------------------------------
 # ✅ VS Code Settings
