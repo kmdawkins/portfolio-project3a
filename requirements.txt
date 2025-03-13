@@ -1,8 +1,8 @@
-# Core Python packages for ETL
 pandas==2.2.3
 numpy==2.2.3
 SQLAlchemy==2.0.39
 psycopg2-binary==2.9.10
-
-# Logging & error handling
 loguru==0.7.3
+win32-setctime==1.2.0
+colorama==0.4.6
+python-dotenv==1.0.1
