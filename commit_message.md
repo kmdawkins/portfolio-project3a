@@ -1,5 +1,24 @@
 # Git Commit Message Log - Project 3A (ETL Workflow)
 
+## [2025-03-13] Column Validation Added to load_staging_pmo.py
+
+**Commit:** `feat: add column validation to load_staging_pmo.py for schema integrity`
+
+**Reason:**  
+- [x] Ensure raw PMO data contains all expected columns before loading into staging table.
+- [x] Prevent data corruption and enforce schema integrity in ETL pipeline.
+- [x] Catch missing or unexpected columns early to fail fast and log issues clearly.
+
+**Details (Optional):**  
+- Introduced a column validation step that compares DataFrame columns to an explicit list of expected columns.
+- Logs detailed error if required columns are missing.
+- Logs warning if extra columns are detected but continues (based on pipeline design).
+- Aligns Python ETL behavior with SQL best practices (explicit column listing).
+
+**Files Affected:**
+- `etl_pipeline/jobs/load_staging_pmo.py`
+
+
 ## [2025-03-13] Initial Python Script for Loading Staging Table
 
 **Commit:** `feat: create initial Python script for loading pmo staging table`
