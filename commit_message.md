@@ -1,5 +1,21 @@
 # Git Commit Message Log - Project 3A (ETL Workflow)
 
+## [2025-03-12] Apply SemVer create_staging_pmo.sql
+
+**Commit:** `docs: update commit_messages.md to align with mini-template for SemVer change log`
+
+**Reason:**  
+- Other: Applied SemVer naming for version control and future pipeline automation.
+
+**Details (Optional):**  
+- Renamed 'create_staging_pmo.sql` to `20250312_v1.0_create_staging_pmo.sql` for consistent version tracking as part of schema creation history.
+- Ensures alignment with SemVer patterns used in Project 2A and prepares for automated ETL workflows.
+
+**Files Affected:**
+- `sql_queries/transformations/20250312_v1.0_create_staging_pmo.sql`
+
+
+
 ## [2025-03-12] Fix create_staging_pmo.sql Script
 
 **Commit:** `fix: correct error in staging_pmo.sql script`
