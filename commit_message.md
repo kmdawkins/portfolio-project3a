@@ -1,5 +1,20 @@
 # Git Commit Message Log - Project 3A (ETL Workflow)
 
+## [2025-03-12] Fix create_staging_pmo.sql Script
+
+**Commit:** `fix: correct error in staging_pmo.sql script`
+
+**Reason:**  
+- Other: Corrected invalid schema reference causing script failure
+
+**Details (Optional):**  
+- Corrected table name reference by removing the `staging.` schema prefix since no "staging" schema exists in the database.
+- Updated script to create table as `staging_pmo` without schema reference.
+- Verified fix successfully via psql: script runs and creates intended table.
+
+**Files Affected:**
+- `sql_queries/transformations/create_staging_pmo.sql`
+
 
 ## [2025-03-12] commit_message.md Update
 
@@ -42,3 +57,7 @@
 
 **Details (Optional):**  
 - <Add any specific details or future reminders, e.g., "Revisit if shared workflow requires it.">
+
+**Files Affected:**
+- `relative/file/path/goes_here.sql`
+- `relative/file/path/goes_here.py`
