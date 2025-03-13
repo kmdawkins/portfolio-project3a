@@ -1,5 +1,21 @@
 # Git Commit Message Log - Project 3A (ETL Workflow)
 
+## [2025-03-13] Initial Python Script for Loading Staging Table
+
+**Commit:** `feat: create initial Python script for loading pmo staging table`
+
+**Reason:**  
+- Other: New feature or functionality
+
+**Details (Optional):**  
+- First draft of `load_staging_pmo.py` to automate bulk loading of transaction data into `staging_pmo` table.
+- Script currently focuses on reading CSV and inserting data using psycopg2.
+- Will add error handling, logging, and validation in subsequent iterations.
+
+**Files Affected:**
+- `etl_pipeline/jobs/load_staging_pmo.py`
+
+
 ## [2025-03-12] Apply SemVer create_staging_pmo.sql
 
 **Commit:** `docs: update commit_messages.md to align with mini-template for SemVer change log`
