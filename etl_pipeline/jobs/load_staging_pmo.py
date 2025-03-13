@@ -30,7 +30,7 @@ engine = create_engine(DATABASE_URL)
 # ------------------------------
 # 3. Load CSV File into DataFrame
 # ------------------------------
-RAW_DATA_PATH = 'data/raw/pmo.csv'
+RAW_DATA_PATH = 'C:/git/portfolio-project3a/data/raw/pmo.csv'
 
 try:
     logger.info("Reading raw PMO data from CSV...")
