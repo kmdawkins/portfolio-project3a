@@ -2,7 +2,7 @@
 # Script: load_staging_pmo.py
 # Purpose: Load raw PMO data into staging_pmo table for ETL pipeline
 # Author: Katherina Dawkins (Project 3A - Python ETL)
-# Version: v1.1.0 (Added column validation - DE best practice)
+# Version: v1.2.0 (Refactored for modular DB connection)
 # ==========================================================
 
 import pandas as pd
@@ -14,17 +14,26 @@ import os
 # ------------------------------
 # 1. Load Environment Variables
 # ------------------------------
-load_dotenv()
+load_dotenv()  # This loads variables from .env
 
 # ------------------------------
-# 2. Database Connection Setup
+# 2. Dynamic Database Connection URL
 # ------------------------------
-DATABASE_URL = os.getenv('DATABASE_URL')
+def get_database_url():
+    """Assemble DATABASE_URL dynamically from separate .env components."""
+    db_user = os.getenv('DB_USER')
+    db_password = os.getenv('DB_PASSWORD')
+    db_host = os.getenv('DB_HOST')
+    db_port = os.getenv('DB_PORT')
+    db_name = os.getenv('DB_NAME')
 
-if not DATABASE_URL:
-    logger.error("DATABASE_URL is not set. Please check your .env file.")
-    raise ValueError("Missing DATABASE_URL for PostgreSQL connection.")
+    if not all([db_user, db_password, db_host, db_port, db_name]):
+        logger.error("❌ One or more required environment variables are missing. Please check your .env file.")
+        raise ValueError("Missing required environment variables for PostgreSQL connection.")
 
+    return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+
+DATABASE_URL = get_database_url()
 engine = create_engine(DATABASE_URL)
 
 # ------------------------------
@@ -33,52 +42,36 @@ engine = create_engine(DATABASE_URL)
 RAW_DATA_PATH = 'data/raw/pmo.csv'
 
 try:
-    logger.info("Reading raw PMO data from CSV...")
+    logger.info("📥 Reading raw PMO data from CSV...")
     df = pd.read_csv(RAW_DATA_PATH)
-    logger.info(f"Successfully read {len(df)} rows.")
+    logger.info(f"✅ Successfully read {len(df)} rows.")
 except Exception as e:
-    logger.error(f"Failed to read CSV file: {e}")
+    logger.error(f"❌ Failed to read CSV file: {e}")
     raise
 
 # ------------------------------
-# 4. Validate DataFrame Columns
+# 4. Pre-Validation of DataFrame Columns (Optional, but Best Practice!)
 # ------------------------------
-# Define expected columns (EXPLICIT SCHEMA CONTRACT)
-EXPECTED_COLUMNS = [
-    'payment_no',
-    'transaction_date',
-    'campaign_id',
-    'description',
-    'contract_no',
-    'purchase_order',
-    'purchase_requisition',
-    'project_no',
-    'payment_entity',
-    'amount_usd',
-    'amount_cny'
+expected_columns = [
+    'payment_no', 'transaction_date', 'campaign_id', 'description', 
+    'contract_no', 'purchase_order', 'purchase_requisition', 'project_no', 
+    'payment_entity', 'amount_usd', 'amount_cny'
 ]
 
-# Perform validation check
-actual_columns = list(df.columns)
-missing_columns = [col for col in EXPECTED_COLUMNS if col not in actual_columns]
-extra_columns = [col for col in actual_columns if col not in EXPECTED_COLUMNS]
-
+missing_columns = [col for col in expected_columns if col not in df.columns]
 if missing_columns:
-    logger.error(f"❌ Missing columns: {missing_columns}")
-    raise ValueError(f"Missing expected columns: {missing_columns}")
+    logger.error(f"❌ Missing expected columns: {missing_columns}")
+    raise ValueError(f"CSV file is missing required columns: {missing_columns}")
 
-if extra_columns:
-    logger.warning(f"⚠️ Extra unexpected columns found: {extra_columns} (will be ignored if not in staging table)")
-
-logger.success("✅ DataFrame columns validated successfully. Ready to load data.")
+logger.info("✅ Column validation passed.")
 
 # ------------------------------
 # 5. Load DataFrame into staging_pmo
 # ------------------------------
 try:
-    logger.info("Loading data into staging_pmo table...")
+    logger.info("📤 Loading data into staging_pmo table...")
     df.to_sql('staging_pmo', engine, if_exists='replace', index=False, method='multi', chunksize=1000)
     logger.success("✅ Data successfully loaded into staging_pmo.")
 except Exception as e:
-    logger.error(f"Failed to load data into staging_pmo: {e}")
+    logger.error(f"❌ Failed to load data into staging_pmo: {e}")
     raise
