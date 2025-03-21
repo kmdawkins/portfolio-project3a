@@ -1,77 +1,66 @@
-# ==========================================================
+# =====================================================================
 # Script: load_staging_pmo.py
-# Purpose: Load raw PMO data into staging_pmo table for ETL pipeline
-# Author: Katherina Dawkins (Project 3A - Python ETL)
-# Version: v1.2.0 (Refactored for modular DB connection)
-# ==========================================================
+# Purpose: Extract, validate, and load PMO data to staging
+# Author: Katherina Dawkins (Project 3a - Python ETL)
+# Version: v2.0.0 (Modified for pipeline transition (Apache Airflow))
+# =====================================================================
 
-import pandas as pd
-from sqlalchemy import create_engine
+import pandas as pd 
 from loguru import logger
 from dotenv import load_dotenv
 import os
 
-# ------------------------------
-# 1. Load Environment Variables
-# ------------------------------
-load_dotenv()  # This loads variables from .env
+from etl_pipeline.utils.db_connector import get_database_url
+from etl_pipeline.utils.validation import validate_columns
 
-# ------------------------------
-# 2. Dynamic Database Connection URL
-# ------------------------------
-def get_database_url():
-    """Assemble DATABASE_URL dynamically from separate .env components."""
-    db_user = os.getenv('DB_USER')
-    db_password = os.getenv('DB_PASSWORD')
-    db_host = os.getenv('DB_HOST')
-    db_port = os.getenv('DB_PORT')
-    db_name = os.getenv('DB_NAME')
 
-    if not all([db_user, db_password, db_host, db_port, db_name]):
-        logger.error("❌ One or more required environment variables are missing. Please check your .env file.")
-        raise ValueError("Missing required environment variables for PostgreSQL connection.")
+# Load environment variables
+load_dotenv()
 
-    return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
-DATABASE_URL = get_database_url()
-engine = create_engine(DATABASE_URL)
-
-# ------------------------------
-# 3. Load CSV File into DataFrame
-# ------------------------------
-RAW_DATA_PATH = 'data/raw/pmo.csv'
-
-try:
-    logger.info("📥 Reading raw PMO data from CSV...")
-    df = pd.read_csv(RAW_DATA_PATH)
-    logger.info(f"✅ Successfully read {len(df)} rows.")
-except Exception as e:
-    logger.error(f"❌ Failed to read CSV file: {e}")
-    raise
-
-# ------------------------------
-# 4. Pre-Validation of DataFrame Columns (Optional, but Best Practice!)
-# ------------------------------
-expected_columns = [
-    'payment_no', 'transaction_date', 'campaign_id', 'description', 
-    'contract_no', 'purchase_order', 'purchase_requisition', 'project_no', 
+# Constraints
+RAW_DATA_PATH = os.path.join("data", "raw", "pmo.csv")
+EXPECTED_COLUMNS = [
+    'payment_no', 'transaction_date', 'campaign_id', 'description',
+    'contract_no', 'purchase_order', 'purchase_requisition', 'project_no',
     'payment_entity', 'amount_usd', 'amount_cny'
 ]
 
-missing_columns = [col for col in expected_columns if col not in df.columns]
-if missing_columns:
-    logger.error(f"❌ Missing expected columns: {missing_columns}")
-    raise ValueError(f"CSV file is missing required columns: {missing_columns}")
+def extract_pmo_data(path: str) -> pd.DataFrame:
+    """Extract raw PMO data from CSV file"""
+    try:
+        logger.info(f"⬇️" Reading raw data from {path}...")
+        df = pd.read_csv(path)
+        logger.info(f"✅ Loaded {len(df)} rows from CSV.")
+        return df
+    except Exception as e:
+        logger.error (F"❌ Failed to read CSV:{e}")
+        raise
 
-logger.info("✅ Column validation passed.")
+    def load_pmo_data_to_db(df: pd.DataFrame, db_url: str) -> None:
+        """Load validated DataFrame into the staging_pmo table."""
+        try:
+            from sqlalchemy import create_engine
+            engine = create_engine(db_url)
+            logger.info("⬇️ Loading data into staging_pmo table...")
+            df.to_sql("staging_pmo", engine, if_exists="replace", index=False, method="multi", chunksize=1000)
+            logger.success("✅ Data loaded into staging_pmo.")
+            except Exception as e:
+                logger.error(f"❌ Failed to load data into staging_pmo: {e}")
+                raise
 
-# ------------------------------
-# 5. Load DataFrame into staging_pmo
-# ------------------------------
-try:
-    logger.info("📤 Loading data into staging_pmo table...")
-    df.to_sql('staging_pmo', engine, if_exists='replace', index=False, method='multi', chunksize=1000)
-    logger.success("✅ Data successfully loaded into staging_pmo.")
-except Exception as e:
-    logger.error(f"❌ Failed to load data into staging_pmo: {e}")
-    raise
+    def main():
+        """Main ETL orchestration for staging_pmo."""
+        db_url = get_database_url()
+
+        # Extract
+        df = extract_pmo_data(RAW_DATA_PATH)
+
+        # Validate
+        validate_columns(df, EXPECTED_COLUMNS)
+
+        # Load
+        load_pmo_data_to_df(df, db_url)
+
+    if __name__ == "__main__":
+        main()
