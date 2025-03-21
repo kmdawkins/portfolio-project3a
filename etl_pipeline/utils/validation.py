@@ -1,7 +1,7 @@
 from loguru import logger
 
 
-def validate_columns(df, expected columns):
+def validate_columns(df, expected_columns):
     """Check that required columns exist in DataFrame."""
     missing = [col for col in expected_column if col not in df.columns]
     if missing:
