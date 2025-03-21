@@ -19,7 +19,7 @@ def test_validate_columns_pass():
     try:
         validate_columns(df, expected)
     except Exception as e:
-        py.test.fail(f"Unexpected exception raised: {e}")
+        py.fail(f"Unexpected exception raised: {e}")
 
 
 def test_validate_columns_fail():
