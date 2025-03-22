@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 from etl_pipeline.utils.validation import validate_columns
 
-
+@pytest.mark.validation # Mark the function as a validation test
 def test_validate_columns_pass():
     """Test validate columns with all required columns present."""
     df = pd.DataFrame(columns=[
@@ -22,6 +22,7 @@ def test_validate_columns_pass():
         py.fail(f"Unexpected exception raised: {e}")
 
 
+@pytest.mark.validation # Mark the function as a validation test
 def test_validate_columns_fail():
     """Test validate_columns raises ValueError when required columns are missing."""
     df = pd.DataFrame(columns=[
