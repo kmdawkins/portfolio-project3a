@@ -20,7 +20,7 @@ def test_check_file_exists_invalid():
 
 # Test 3: Valid extension
 def test_validate_file_extension_valid():
-    asser_validate_file_extension("data.csv", [".csv", ".txt"]) is True
+    assert_validate_file_extension("data.csv", [".csv", ".txt"]) is True
 
 # Test 4: Invalid extension
 def test_validate_file_extension_invalid():
