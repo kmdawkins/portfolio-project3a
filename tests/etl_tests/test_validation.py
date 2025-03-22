@@ -1,6 +1,12 @@
 import pandas as pd
 import pytest
+from loguru import logger
+import sys
 from etl_pipeline.utils.validation import validate_columns
+
+# Ensure loguru writes to stdout for capture during tests
+logger.remove()  # Remove the default sink
+logger.add(sys.stdout, level="INFO")  # Add stdout sink to capture logs
 
 @pytest.mark.validation  # Mark the function as a validation test
 def test_validate_columns_pass(caplog):
