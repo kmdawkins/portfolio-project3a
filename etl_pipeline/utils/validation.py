@@ -1,5 +1,9 @@
+import sys
 from loguru import logger
 
+# Redirect loguru to stdout explicitly if needed
+logger.remove()
+logger.add(sys.stdout, level="INFO")  # Capture logs from stdout
 
 def validate_columns(df, expected_columns):
     """Check that required columns exist in DataFrame."""
