@@ -45,4 +45,4 @@ def test_validate_columns_fail():
         validate_columns(df, expected)
 
     log_contents = log_stream.getvalue()
-    assert "❌ Missing required columns" in log_contents
+    assert "❌ Missing columns:" in log_contents
