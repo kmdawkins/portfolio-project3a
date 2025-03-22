@@ -7,6 +7,7 @@ from etl_pipeline.utils.validation import validate_columns
 # Ensure loguru writes to stdout for capture during tests
 logger.remove()  # Remove the default sink
 logger.add(sys.stdout, level="INFO")  # Add stdout sink to capture logs
+logger.add("logs/test_validation.log", level="INFO", rotation="500 MB", retention="7 days", compression="zip")  # Log to a file as well
 
 @pytest.mark.validation  # Mark the function as a validation test
 def test_validate_columns_pass(caplog):
@@ -46,4 +47,3 @@ def test_validate_columns_fail(caplog):
 
     # Check that the expected error log message is present
     assert "❌ Missing required columns" in caplog.text
-
