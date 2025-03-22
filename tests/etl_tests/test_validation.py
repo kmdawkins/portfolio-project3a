@@ -46,3 +46,4 @@ def test_validate_columns_fail(caplog):
 
     # Check that the expected error log message is present
     assert "❌ Missing required columns" in caplog.text
+
