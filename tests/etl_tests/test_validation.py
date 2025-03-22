@@ -1,11 +1,9 @@
-# tests/etl_tests/test_validation.py
-
 import pandas as pd
 import pytest
 from etl_pipeline.utils.validation import validate_columns
 
-@pytest.mark.validation # Mark the function as a validation test
-def test_validate_columns_pass():
+@pytest.mark.validation  # Mark the function as a validation test
+def test_validate_columns_pass(caplog):
     """Test validate columns with all required columns present."""
     df = pd.DataFrame(columns=[
         'payment_no', 'transaction_date', 'campaign_id', 'description',
@@ -14,19 +12,19 @@ def test_validate_columns_pass():
     ])
     expected = df.columns.tolist()
 
-
-    # This should not raise an exception
-    try:
+    # Run the validation and capture logs
+    with caplog.at_level("INFO"):  # Capture logs at INFO level
         validate_columns(df, expected)
-    except Exception as e:
-        py.fail(f"Unexpected exception raised: {e}")
+
+    # Check that the expected log message is present in captured logs
+    assert "✅ Column validation passed." in caplog.text
 
 
-@pytest.mark.validation # Mark the function as a validation test
-def test_validate_columns_fail():
+@pytest.mark.validation  # Mark the function as a validation test
+def test_validate_columns_fail(caplog):
     """Test validate_columns raises ValueError when required columns are missing."""
     df = pd.DataFrame(columns=[
-        'payment_no', 'transaction_date', 'description', # Missing 'campaign_id', etc.
+        'payment_no', 'transaction_date', 'description',  # Missing 'campaign_id', etc.
         'contract_no', 'amount_usd'
     ])
     expected = [
@@ -35,8 +33,10 @@ def test_validate_columns_fail():
         'payment_entity', 'amount_usd', 'amount_cny'
     ]
 
+    # Capture logs for validation failure
+    with caplog.at_level("ERROR"):  # Capture logs at ERROR level
+        with pytest.raises(ValueError) as exc_info:
+            validate_columns(df, expected)
 
-    with pytest.raises(ValueError) as exc_info:
-        validate_columns(df, expected)
-
-    assert "Missing required columns" in str(exc_info.value)
+    # Check that the expected error log message is present
+    assert "❌ Missing required columns" in caplog.text
