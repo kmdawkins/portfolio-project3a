@@ -23,10 +23,11 @@ def test_load_csv_with_fallback_delimiter(tmp_path):
     test_file = tmp_path / "semicolon_delimited.csv"
     test_file.write_text("col1;col2\n5;6\n7;8")
 
-    # Put incorrect delimiter first to force fallback to ";"
+    # Put bad delimiter first
     df = load_csv_with_fallback(str(test_file), delimiters=["|", ";"])
-    assert not df.empty
-    assert "col1" in df.columns
+    
+    assert list(df.columns) == ["col1", "col2"]
+    assert len(df) == 2
 
 
 
