@@ -9,10 +9,11 @@ def load_csv_with_fallback(path: str, delimiters: list = [",", ";", "\t"]) -> pd
     for delimiter in delimiters:
         try:
             df = pd.read_csv(path, delimiter=delimiter, on_bad_lines="error")
-            expected_column_count = df.shape[1]
 
-            # Additional safeguard: Require at least 2+ columns to be valid
-            if expected_column_count < 2:
+            # ✅ Additional checks to ensure usable structure
+            if df.empty:
+                raise ValueError(f"No data loaded using delimiter '{delimiter}'.")
+            if df.shape[1] < 2:
                 raise ValueError(f"Too few columns with delimiter '{delimiter}'.")
 
             logger.info(f"✅ Loaded CSV using delimiter: '{delimiter}' with {len(df)} rows.")
