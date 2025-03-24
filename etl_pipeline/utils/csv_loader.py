@@ -8,7 +8,7 @@ def load_csv_with_fallback(path: str, delimiters: list = [",", ";", "\t"]) -> pd
     Returns the DataFrame if successful, otherwise raises an exception."""
     for delimiter in delimiters:
         try:
-            df = pd.read_csv(path, delimiter=delimiter)
+            df = pd.read_csv(path, delimiter=delimiter, on_bad_lines="error")  # pandas ≥1.3
             logger.info(f"✅ Loaded CSV using delimiter: '{delimiter}' with {len(df)} rows.")
             return df
         except Exception as e:
