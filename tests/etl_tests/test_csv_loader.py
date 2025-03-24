@@ -22,7 +22,8 @@ def test_load_csv_with_default_delimiter(tmp_path):
 def test_load_csv_with_fallback_delimiter(tmp_path):
     test_file = tmp_path / "semicolon_delimited.csv"
     # Make the first row clearly structured for semicolon
-    test_file.write_text("col1;col2\n5;6\n7;8")
+    test_file.write_text("col1;col2\n5;6\n7;8\n9;10")  # add more rows to trigger bad_lines
+
 
     # First delimiter will split nothing correctly, fallback ";" will work
     df = load_csv_with_fallback(str(test_file), delimiters=["|", ";"])
