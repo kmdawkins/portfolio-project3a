@@ -30,8 +30,7 @@ def test_load_csv_with_fallback_delimiter(tmp_path):
     df = load_csv_with_fallback(str(test_file), delimiters=["|", ";"])
 
     assert list(df.columns) == ["col1", "col2"]
-    assert len(df) == 2
-
+    assert len(df) == 3  # Match 3 rows of mock data
 
 
 # Test 3: All delimiter attempts fail
