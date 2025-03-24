@@ -6,13 +6,14 @@ from etl_pipeline.utils.csv_loader import load_csv_with_fallback
 
 
 # Test 1: Load succesffully with default comma delimiter
-def test_load_csv_with_default_delimiter(tmp_path):
-    test_file = tmp_path / "valid_comma.csv"
-    test_file.write_text("col1,col2\n1,2\n3,4")
+def test_load_csv_with_fallback_delimiter(tmp_path):
+    test_file = tmp_path / "semicolon_delimited.csv"
+    # First line is valid; second line triggers on_bad_lines="error"
+    test_file.write_text("col1;col2\n5;6\n7")  # uneven row for bad delimiter
 
+    # "|" will trigger bad line error, ";" should succeed
+    df = load_csv_with_fallback(str(test_file), delimiters=["|", ";"])
 
-    df = load_csv_with_fallback(str(test_file))
-    assert not df.empty
     assert list(df.columns) == ["col1", "col2"]
     assert len(df) == 2
 
