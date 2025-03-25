@@ -38,7 +38,15 @@ def load_pmo_data_to_db(df: pd.DataFrame, db_url: str) -> None:
         from sqlalchemy import create_engine
         engine = create_engine(db_url)
         logger.info("⬇️ Loading data into staging_pmo table...")
-        df.to_sql("staging_pmo", engine, if_exists="replace", index=False, method="multi", chunksize=1000)
+        df.to_sql(
+            name="staging_pmo",
+            con=engine,
+            schema="etl",
+            if_exists="replace",
+            index=False,
+            method="multi",
+            chunksize=1000
+        )
         logger.success("✅ Data loaded into staging_pmo.")
     except Exception as e:
         logger.error(f"❌ Failed to load data into staging_pmo: {e}")
