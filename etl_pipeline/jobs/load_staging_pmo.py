@@ -43,9 +43,7 @@ def load_pmo_data_to_db(df: pd.DataFrame, db_url: str) -> None:
             con=engine,
             schema="etl",
             if_exists="replace",
-            index=False,
-            method="multi",
-            chunksize=1000
+            index=False
         )
         logger.success("✅ Data loaded into staging_pmo.")
     except Exception as e:
