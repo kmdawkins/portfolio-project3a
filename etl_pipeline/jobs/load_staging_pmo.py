@@ -44,25 +44,25 @@ def load_pmo_data_to_db(df: pd.DataFrame, db_url: str) -> None:
         logger.error(f"❌ Failed to load data into staging_pmo: {e}")
         raise
 
-    def main():
-        """Main ETL orchestration for staging_pmo."""
-        db_url = get_database_url()
+def main():
+    """Main ETL orchestration for staging_pmo."""
+    db_url = get_database_url()
 
-        # Pre-validation checks
-        if not check_file_exists (RAW_DATA_PATH):
-            raise FileNotFoundError (f"❌ File not found: {RAW_DATA_PATH}")
+    # Pre-validation checks
+    if not check_file_exists (RAW_DATA_PATH):
+        raise FileNotFoundError (f"❌ File not found: {RAW_DATA_PATH}")
         
-        if not validate_file_extension(RAW_DATA_PATH, ALLOWED_EXTENSIONS):
-            raise ValueError(f"❌ Invalid file extension. Expected: {ALLOWED_EXTENSIONS}")
+    if not validate_file_extension(RAW_DATA_PATH, ALLOWED_EXTENSIONS):
+        raise ValueError(f"❌ Invalid file extension. Expected: {ALLOWED_EXTENSIONS}")
             
-        # Extract with fallback delimiters
-        df = load_csv_with_fallback(RAW_DATA_PATH)
+    # Extract with fallback delimiters
+    df = load_csv_with_fallback(RAW_DATA_PATH)
 
-        # Validate columns
-        validate_columns(df, EXPECTED_COLUMNS)
+    # Validate columns
+    validate_columns(df, EXPECTED_COLUMNS)
 
-        # Load to database
-        load_pmo_data_to_db(df, db_url)
+    # Load to database
+    load_pmo_data_to_db(df, db_url)
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
