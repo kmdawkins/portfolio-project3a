@@ -71,7 +71,7 @@ The extracted data is validated and loaded into a canonical staging table: `etl.
 - Log files saved in `logs/` directory with rotation and compression
 
 ## Repository Structure
-![Project 3A Git Repository Structure](link to image)
+![Project 3A Git Repository Structure](diagrams/project3a_repo_structure.png)
 
 ## Key Insights + Takeaways
 
