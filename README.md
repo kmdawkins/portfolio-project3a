@@ -40,7 +40,8 @@ The extracted data is validated and loaded into a canonical staging table: `etl.
 ## Key Steps + Technologies
 
 ### Step 1: Python Environment + Package Setup
-- Isolated enviroment with `venv`
+- Isolated Python enviroment created using `venv` (lives **outside the Git repository** to avoid committing virtual environment files).
+- All dependencies tracked in `requirements.txt` for easy reproducibility.
 - Key dependencies: `pandas`, `sqlalchemy`, `psycopg2`, `python-dotenv`, `loguru`, `pytest`
 - `.env` file used for PostgreSQL connection management
 
