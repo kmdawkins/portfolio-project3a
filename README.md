@@ -1,6 +1,10 @@
 # Project 3A: Python-based ETL Workflow with PostgreSQL + Logging
 This project demonstrates how to build a scalable, production-aligned ETL pipeline in Python using Pandas, SQLAlchemy, and PostgreSQL.
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.x-blue)
+![Status](https://img.shields.io/badge/Project-Complete-brightgreen)
+
 ## Objective
 
 Convert previously manual SQL workflows into a **modular, production-style Python ETL pipeline**, applying
