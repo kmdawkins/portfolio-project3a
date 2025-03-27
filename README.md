@@ -1,4 +1,5 @@
-# Project 3A: Python ETL Workflow Conversion
+# Project 3A: Python-based ETL Workflow with PostgreSQL + Logging
+This project demonstrates how to build a scalable, production-aligned ETL pipeline in Python using Pandas, SQLAlchemy, and PostgreSQL.
 
 ## Objective
 
@@ -31,7 +32,7 @@ This batch pipeline executes the following ETL phases:
 
 ## Data Description
 
-This ETL pipeline processes the **raw transaction file `pmo.csv`, which contains:
+This ETL pipeline processes the **raw transaction file `pmo.csv`**, which contains:
 - Payment-level financial records (255,000+ rows)
 - Columns related to payment metadata, campaign linkage, purchase requisitions, and currency amounts
 
@@ -40,7 +41,7 @@ The extracted data is validated and loaded into a canonical staging table: `etl.
 ## Key Steps + Technologies
 
 ### Step 1: Python Environment + Package Setup
-- Isolated Python enviroment created using `venv` (lives **outside the Git repository** to avoid committing virtual environment files).
+- Isolated Python environment created using `venv` (lives **outside the Git repository** to avoid committing virtual environment files).
 - All dependencies tracked in `requirements.txt` for easy reproducibility.
 - Key dependencies: `pandas`, `sqlalchemy`, `psycopg2`, `python-dotenv`, `loguru`, `pytest`
 - `.env` file used for PostgreSQL connection management
@@ -76,7 +77,7 @@ The extracted data is validated and loaded into a canonical staging table: `etl.
 ## Key Insights + Takeaways
 
 - ✅ **Python ETL pipelines** allow for modular, reusable workflows
-- ✅ **Cenntralized logging and exception handling** make debugging easier and promote observability
+- ✅ **Centralized logging and exception handling** make debugging easier and promote observability
 - ✅ **Pre-validation checks prevent ingestion failures** and preserve schema alignment
 - ✅ **Test-driven development (TDD)** helps validate edge cases and malformed input data
 - ✅ **Loading into the correct schema (`etl`) avoids accidental overwrite of canonical tables**
@@ -90,7 +91,7 @@ This project concludes the **manual ETL automation phase** and prepares the pipe
 - Add **lightweight transformations** (e.g., rename columns, coalesce NULLS)
 - Integrate a **currency conversion API** and **mock JSON ingestion job**
 
-➡️ **Project 3B: Data Warehousing + Cloug Integration**
+➡️ **Project 3C: Data Warehousing + Cloug Integration**
 - Push cleaned data to **Snowflake and AWS S3**
 - Begin **dbt transformations**, CI/CD, and cloud-based analytics workflows
 
