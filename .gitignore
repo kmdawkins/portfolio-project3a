@@ -62,6 +62,13 @@ tests/etl_tests/tmp/
 tests/airflow_tests/tmp/
 
 # -------------------------------
+# ✅ Sandbox & Debug Scripts
+# -------------------------------
+sandbox/*
+!sandbox/README.md
+!sandbox/test_airflow_conn_debug.py
+
+# -------------------------------
 # ✅ Jupyter Notebooks
 # -------------------------------
 notebooks/.ipynb_checkpoints/
