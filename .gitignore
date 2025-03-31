@@ -93,6 +93,13 @@ uncommitted_dags/
 airflow.db
 
 # -------------------------------
+# ✅ Docker (Project 3B Setup)
+# -------------------------------
+docker/airflow_logs/
+docker/airflow_volume/
+docker/postgres_db/
+
+# -------------------------------
 # ✅ dbt (Project 3C Future-Proofing)
 # -------------------------------
 dbt_modules/
